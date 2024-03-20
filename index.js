@@ -53,19 +53,25 @@ check_run('2',function(){
 		}
 	}
 });*/
-let times=document.getElementsByClassName('time');
-for(let i of times)
-{
-	if(i.tagName!='SPAN') continue;
-	let str=i.outerHTML;
-	let idxb=str.indexOf('datetime');
-	idxb+=10;
-	let idxe=(str.indexOf('"',idxb));
-	let datetime=str.substring(idxb,idxe);
-	console.log(datetime);
-	if(new Date().getTime()-datetime > 31536000000)
+check_run('3',function(){
+	if(location.href.endsWith('discuss'))
 	{
-		console.log(new Date().getTime()-datetime);
-		i.parentNode.parentNode.parentNode.parentNode.parentNode.style.display='none';
+		let times=document.getElementsByClassName('time');
+		for(let i of times)
+		{
+			if(i.tagName!='SPAN') continue;
+			let str=i.outerHTML;
+			let idxb=str.indexOf('datetime');
+			idxb+=10;
+			let idxe=(str.indexOf('"',idxb));
+			let datetime=str.substring(idxb,idxe);
+			console.log(datetime);
+			if(new Date().getTime()-datetime > 31536000000)
+			{
+				console.log(new Date().getTime()-datetime);
+				i.parentNode.parentNode.parentNode.parentNode.parentNode.style.display='none';
+			}
+		}
 	}
-}
+	
+});
