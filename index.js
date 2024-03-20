@@ -1,6 +1,6 @@
 //console.log(window,'Topscoding Plus插件成功运行');
 //window.alert('Topscoding Plus插件成功运行');
-var check_run=function(id,callback){/*
+var check_run=function(_id,callback){/*
 	chrome.storage.sync.get([id],function(result){
 		if(result[id]!='false'){
 			callback();
@@ -8,7 +8,7 @@ var check_run=function(id,callback){/*
 	});*/
 	callback();
 }
-check_run('屏蔽超大图片',function(){
+check_run('1',function(){
 	var imgs=document.getElementsByTagName('img');
 	for(var it of imgs)
 	{
@@ -19,7 +19,7 @@ check_run('屏蔽超大图片',function(){
 		}
 	}
 });
-check_run('纯净模式',function(){
+check_run('2',function(){
 	var footer=document.getElementsByClassName('footer__extra-link');
 	footer[0].style.display='none';
 	var cato=document.getElementsByClassName('footer__category');
@@ -35,3 +35,37 @@ check_run('纯净模式',function(){
 		d[0].style.display='none';
 	}
 });
+/*check_run('3',function(){
+	// alert(location.href);
+	// if(location.href.endsWith('discuss'))
+	{
+		let times=document.getElementsByClassName('time');
+		alert(times.length);
+		for(let i of times)
+		{
+			if(i.tagName!='SPAN') continue;
+			if(Data().now()-i.dataset.timestamp > 31536000)
+			{
+				console.log(i);
+				console.log(i.dataset.timestamp);
+				i.parentElement.parentElement.parentElement.parentElement.parentElement.style.display='none';
+			}
+		}
+	}
+});*/
+let times=document.getElementsByClassName('time');
+for(let i of times)
+{
+	if(i.tagName!='SPAN') continue;
+	let str=i.outerHTML;
+	let idxb=str.indexOf('datetime');
+	idxb+=10;
+	let idxe=(str.indexOf('"',idxb));
+	let datetime=str.substring(idxb,idxe);
+	console.log(datetime);
+	if(new Date().getTime()-datetime > 31536000000)
+	{
+		console.log(new Date().getTime()-datetime);
+		i.parentNode.parentNode.parentNode.parentNode.parentNode.style.display='none';
+	}
+}
