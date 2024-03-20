@@ -1,18 +1,25 @@
 var save=document.getElementById('save');
 var checks=document.getElementsByTagName('input');
-for(var i in checks)
+for(let i=0;i<checks.length;i++)
 {
-	chrome.storage.sync.get([i.innerHTML],function(result){
-		i.checked=result[i.innerHTML];
-	});
+	// chrome.storage.sync.get([checks[i].innerHTML],function(result){
+	// 	checks[i].checked=result[checks[i].innerHTML];
+	// });
+	(function(index) {
+        chrome.storage.sync.get(checks[index].value, function(result) {
+			console.log(checks[index].value);
+			console.log(result);
+            checks[index].checked = result[checks[index].value];
+        });
+    })(i);
 }
 save.onclick=function()
 {
-	for(var i in checks)
+	for(let i=0;i<checks.length;i++)
 	{
-		if(i.type=='checkbox')
+		if(checks[i].type=='checkbox')
 		{
-			chrome.storage.sync.set({i.innerHTML:i.checked},function(){alert('保存成功');});
+			chrome.storage.sync.set({[checks[i].value]: checks[i].checked},function(){/* alert('保存成功'); */});
 		}
 	}
 }
