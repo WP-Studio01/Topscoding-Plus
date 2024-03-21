@@ -5,7 +5,7 @@
 	"content_scripts": [
 		{
 			"matches": ["https://www.topscoding.com/*"],
-			"js": ["jquery.min.js","index.js"]
+			"js": ["marked.min.js","jquery.min.js","index.js"]
 		}
 	],
 	"action": {

@@ -136,8 +136,11 @@ check_run('5',function(){
 		discuessbody[0].oncut=()=>{true};
 		console.log(discuessbody[0].innerHTML);
 		console.log(make_dicuess_raw_url());
-		fetchData(make_dicuess_raw_url(),(str)=>{
-			discuessbody[0].innerHTML=(str); 
-		});
+		setTimeout(()=>{
+			fetchData(make_dicuess_raw_url(),(str)=>{
+				let render=new marked.Renderer();
+				discuessbody[0].innerHTML=marked(str,{renderer:render,sanitize:false}); 
+			});
+		},500);
 	},1000);
 });
