@@ -1,12 +1,12 @@
-//console.log(window,'Topscoding Plus插件成功运行');
+console.log(window,'Topscoding Plus插件成功运行');
 //window.alert('Topscoding Plus插件成功运行');
 var check_run=function(id,callback){
-	chrome.storage.sync.get(id,function(result){
-		if(result[id]!=false){
+	/*chrome.storage.sync.get(id,function(result){
+		if(result[id]!='false'){
 			callback();
 		}
-	});
-	// callback();
+	});*/
+	callback();
 }
 check_run('1',function(){
 	var imgs=document.getElementsByTagName('img');
@@ -72,4 +72,59 @@ check_run('3',function(){
 		}
 	}
 	
+});
+const make_dicuess_raw_url = () => {
+	let ih='';
+	ih+='https://www.topscoding.com';
+	ih+=location.pathname;
+	ih+='/raw';
+	return ih;
+};
+check_run('4',function(){
+	// if(window.location.href.indexOf('discuss')==-1) return;
+	setTimeout(()=>{
+		let menunavmore=document.getElementById('menu-nav-more');
+		let newnode=document.createElement('li');
+		newnode.classList.add('menu__item');
+		let ih='';
+		ih+='<a href="';
+		ih+='https://www.topscoding.com';
+		ih+=location.pathname;
+		ih+='/raw" class="menu__link">下载讨论内容</a>';
+		newnode.innerHTML=ih;
+		menunavmore.appendChild(newnode);
+	},1000);
+});
+function checkFileExists(url)
+{
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', url, true);
+	{
+	  if (xhr.readyState === 4) {
+		if (xhr.status === 200) {
+		  return (true); // 文件存在
+		} else {
+		  return (false); // 文件不存在
+		}
+	  }
+	};
+	xhr.send();
+}
+async function fetchData(url)
+{
+	const response = await fetch(url);
+	const data = await (await (await response.blob()).text()).toString();
+	return data;
+}
+check_run('5',function(){
+	// if(window.location.href.indexOf('discuss')==-1) return;
+	setTimeout(()=>{
+		let discuessbody=document.getElementsByClassName('topic__content');
+		discuessbody[0].oncontextmenu=()=>{true};
+		discuessbody[0].oncopy=()=>{true};
+		discuessbody[0].oncut=()=>{true};
+		console.log(discuessbody[0].innerHTML);
+		console.log(make_dicuess_raw_url());
+		async ()=>{discuessbody[0].innerHTML=(await fetchData(make_dicuess_raw_url()));}
+	},1000);
 });
