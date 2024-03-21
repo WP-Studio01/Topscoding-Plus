@@ -7,8 +7,6 @@ for(let i=0;i<checks.length;i++)
 	// });
 	(function(index) {
         chrome.storage.sync.get(checks[index].value, function(result) {
-			console.log(checks[index].value);
-			console.log(result);
             checks[index].checked = result[checks[index].value];
         });
     })(i);

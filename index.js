@@ -1,12 +1,12 @@
 //console.log(window,'Topscoding Plus插件成功运行');
 //window.alert('Topscoding Plus插件成功运行');
-var check_run=function(_id,callback){/*
-	chrome.storage.sync.get([id],function(result){
-		if(result[id]!='false'){
+var check_run=function(id,callback){
+	chrome.storage.sync.get(id,function(result){
+		if(result[id]!=false){
 			callback();
 		}
-	});*/
-	callback();
+	});
+	// callback();
 }
 check_run('1',function(){
 	var imgs=document.getElementsByTagName('img');
@@ -65,10 +65,8 @@ check_run('3',function(){
 			idxb+=10;
 			let idxe=(str.indexOf('"',idxb));
 			let datetime=str.substring(idxb,idxe);
-			console.log(datetime);
 			if(new Date().getTime()-datetime > 31536000000)
 			{
-				console.log(new Date().getTime()-datetime);
 				i.parentNode.parentNode.parentNode.parentNode.parentNode.style.display='none';
 			}
 		}
