@@ -1,11 +1,11 @@
 {
 	"manifest_version": 3,
 	"name": "Topscoding plus",
-	"version": "1.1.4", 
+	"version": "1.2.0", 
 	"content_scripts": [
 		{
 			"matches": ["https://www.topscoding.com/*"],
-			"js": ["marked.min.js","jquery.min.js","index.js"]
+			"js": ["jquery.min.js","index.js"]
 		}
 	],
 	"action": {

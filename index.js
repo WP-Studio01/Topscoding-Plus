@@ -102,19 +102,30 @@ function checkFileExists(url)
 	{
 	  if (xhr.readyState === 4) {
 		if (xhr.status === 200) {
-		  return (true); // 文件存在
+		  return (true);
 		} else {
-		  return (false); // 文件不存在
+		  return (false); 
 		}
 	  }
 	};
 	xhr.send();
 }
-async function fetchData(url)
+function fetchData(url,callback)
 {
-	const response = await fetch(url);
-	const data = await (await (await response.blob()).text()).toString();
-	return data;
+	let xhr=new XMLHttpRequest();
+	xhr.open('GET',url);
+	xhr.send();
+	xhr.onreadystatechange = ()=>{
+		if(xhr.readyState == 4)
+		{
+			if(xhr.status==200)
+			{
+				callback(xhr.responseText);
+			}
+			else console.error(xhr.status);
+		}
+	}
+	return xhr.responseText;
 }
 check_run('5',function(){
 	// if(window.location.href.indexOf('discuss')==-1) return;
@@ -125,6 +136,8 @@ check_run('5',function(){
 		discuessbody[0].oncut=()=>{true};
 		console.log(discuessbody[0].innerHTML);
 		console.log(make_dicuess_raw_url());
-		async ()=>{discuessbody[0].innerHTML=(await fetchData(make_dicuess_raw_url()));}
+		fetchData(make_dicuess_raw_url(),(str)=>{
+			discuessbody[0].innerHTML=(str); 
+		});
 	},1000);
 });
